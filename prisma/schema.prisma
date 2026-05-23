@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model PricingItem {
+  id          Int      @id @default(autoincrement())
+  keyName     String   @unique
+  displayName String
+  unit        String
+  priceNet    Decimal
+  priceType   String
+  lastUpdated DateTime @default(now())
+}
+
+model LeadEstimate {
+  id               Int      @id @default(autoincrement())
+  clientName       String
+  clientPhone      String
+  clientEmail      String?
+  connectionLength Int
+  cableType        String
+  terrainType      String
+  depth            Float
+  conduitsCount    Int
+  calculatedNet    Decimal
+  calculatedBrutto Decimal
+  pdfUrl           String?
+  createdAt        DateTime @default(now())
+}
