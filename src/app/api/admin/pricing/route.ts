@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
   }
 
   const items = await getPricingItems();
-  return NextResponse.json({ items: items.map((item) => ({
+  return NextResponse.json({ items: items.map((item: any) => ({
     ...item,
     priceNet: Number(item.priceNet)
   })) });
