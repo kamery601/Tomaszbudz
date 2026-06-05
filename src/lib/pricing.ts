@@ -30,9 +30,11 @@ export const pricingConfig: PricingConfig = {
   company_markup_pct: 0.15,
   terrains: {
     earth: { name: 'Ziemia (nieutwardzony)', labor_multiplier: 1.0 },
+    roots: { name: 'Ziemia utrudniona (korzenie, skarpa)', labor_multiplier: 1.4 },
     paving: { name: 'Kostka brukowa (+demontaż i odtworzenie)', labor_multiplier: 1.2 },
     asphalt: { name: 'Asfalt (+cięcie i odtworzenie)', labor_multiplier: 1.3 },
-    difficult: { name: 'Teren trudny / Podhale (skała, kamień)', labor_multiplier: 2.0 }
+    difficult: { name: 'Kamienie / Podhale', labor_multiplier: 2.0 },
+    rock: { name: 'Skała wymagająca kucia', labor_multiplier: 3.5 }
   },
   cables: {
     YAKY_4x35: { name: 'YAKY 4x35 mm² (Aluminium - standard przyłącza domowego)', price_net: 14.5 },

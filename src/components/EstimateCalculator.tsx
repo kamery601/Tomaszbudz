@@ -226,9 +226,11 @@ export default function EstimateCalculator() {
                     className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-slate-900"
                   >
                     <option value="earth">Ziemia (nieutwardzony)</option>
+                    <option value="roots">Ziemia utrudniona (korzenie, skarpa)</option>
                     <option value="paving">Kostka brukowa</option>
                     <option value="asphalt">Asfalt</option>
-                    <option value="difficult">Teren trudny / Podhale</option>
+                    <option value="difficult">Kamienie / Podhale</option>
+                    <option value="rock">Skała wymagająca kucia</option>
                   </select>
                 </label>
               </div>
