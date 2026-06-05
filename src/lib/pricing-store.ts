@@ -11,9 +11,19 @@ async function ensurePricingTable() {
       "priceNet" REAL NOT NULL,
       "priceType" TEXT NOT NULL,
       "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+      "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      "lastUpdated" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
     )
   `);
+
+  try {
+    await prisma.$executeRawUnsafe(`
+      ALTER TABLE "PricingItem"
+      ADD COLUMN "lastUpdated" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    `);
+  } catch (error) {
+    // Kolumna już istnieje albo baza jej nie wymaga.
+  }
 }
 
 export async function seedPricingItemsIfEmpty() {
