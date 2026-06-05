@@ -45,6 +45,20 @@ export default function EstimateCalculator() {
         throw new Error('Uzupełnij imię oraz telefon, aby wygenerować kosztorys.');
       }
 
+      if (showEarthWorks) {
+        if (Number(formData.length) < 1 || Number(formData.length) > 500) {
+          throw new Error('Długość trasy kabla musi mieścić się w zakresie 1–500 m.');
+        }
+
+        if (Number(formData.depth) < 0.5 || Number(formData.depth) > 2.0) {
+          throw new Error('Głębokość wykopu musi mieścić się w zakresie 0.5–2.0 m.');
+        }
+
+        if (Number(formData.conduitsCount) < 0 || Number(formData.conduitsCount) > 20) {
+          throw new Error('Liczba przepustów musi mieścić się w zakresie 0–20.');
+        }
+      }
+
       const calculation = calculateMultiEstimate({
         jobType: formData.jobType,
         length: showEarthWorks ? Number(formData.length) : 0,
