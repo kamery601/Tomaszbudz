@@ -46,6 +46,8 @@ export const pricingConfig: PricingConfig = {
     cable_laying: { name: 'Układanie kabla w wykopie', unit: 'm', price: 25.0, type: 'labor' },
     warning_tape: { name: 'Folia ostrzegawcza niebieska z ułożeniem', unit: 'm', price: 3.5, type: 'combined' },
     backfill_and_compact: { name: 'Zasypanie wykopu z zagęszczeniem mechanicznym (skoczek/zagęszczarka)', unit: 'm³', price: 60.0, type: 'combined' },
+    surface_restore_paving: { name: 'Demontaż i odtworzenie kostki brukowej', unit: 'm', price: 120.0, type: 'combined' },
+    surface_restore_asphalt: { name: 'Cięcie i odtworzenie nawierzchni asfaltowej', unit: 'm', price: 250.0, type: 'combined' },
     conduit_pipe: { name: 'Rura osłonowa przepustowa (Arota 110)', unit: 'm', price: 45.0, type: 'material' },
     zkp_freestanding: { name: 'Dostawa i montaż szafy złączowo-pomiarowej ZKP-1 na fundamencie w granicy działki', unit: 'szt.', price: 2200.0, type: 'combined' },
     box_surface: { name: 'Dostawa i montaż szafy licznikowej zewnętrznej, natynkowej/wtynkowej na elewacji', unit: 'szt.', price: 1100.0, type: 'combined' },

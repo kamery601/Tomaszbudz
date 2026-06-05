@@ -77,7 +77,7 @@ export default function EstimateCalculator() {
             <p className="text-sm uppercase tracking-[0.24em] text-amber-300">Tomasz Budz Elektro-Podhale</p>
             <h1 className="mt-3 text-3xl font-semibold sm:text-4xl">Uniwersalny Asystent Przyłączeniowo-Remontowy</h1>
             <p className="mt-3 max-w-xl text-sm leading-6 text-slate-300">
-              Kalkulator wstępny według stawek TAURON Dystrybucja Małopolska: nowe przyłącza, wyniesienie licznika, modernizacja mocy oraz prąd budowlany.
+              Wycena orientacyjna prac związanych z przyłączami, licznikami i modernizacjami wykonywanymi zgodnie z wymaganiami TAURON Dystrybucja.
             </p>
           </div>
           <div className="rounded-3xl bg-slate-800 p-5 text-sm leading-6 text-slate-200">
@@ -238,7 +238,7 @@ export default function EstimateCalculator() {
               disabled={loading}
               className="inline-flex items-center justify-center rounded-2xl bg-amber-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-amber-400 disabled:cursor-not-allowed disabled:bg-slate-300"
             >
-              {loading ? 'Obliczanie...' : 'Wygeneruj kosztorys wstępny wg stawek Tauron'}
+              {loading ? 'Obliczanie...' : 'Wygeneruj orientacyjną wycenę'}
             </button>
           </div>
         </form>

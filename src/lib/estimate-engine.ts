@@ -73,6 +73,14 @@ export function calculateMultiEstimate(input: MultiEstimateInput): EstimateResul
     items.push(createCostItem(pricingConfig.items.warning_tape, Number(length.toFixed(2))));
     items.push(createCostItem(pricingConfig.items.backfill_and_compact, volume));
 
+    if (terrainType === 'paving') {
+      items.push(createCostItem(pricingConfig.items.surface_restore_paving, Number(length.toFixed(2))));
+    }
+
+    if (terrainType === 'asphalt') {
+      items.push(createCostItem(pricingConfig.items.surface_restore_asphalt, Number(length.toFixed(2))));
+    }
+
     if (conduitLength > 0) {
       items.push(createCostItem(pricingConfig.items.conduit_pipe, conduitLength));
     }
