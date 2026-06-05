@@ -12,8 +12,14 @@ export default async function AdminPage() {
     return <AdminLoginForm />;
   }
 
-  const dbItems = await getPricingItems();
-  const dbPriceByKey = new Map(dbItems.map((item) => [item.keyName, Number(item.priceNet)]));
+  let dbPriceByKey = new Map<string, number>();
+
+  try {
+    const dbItems = await getPricingItems();
+    dbPriceByKey = new Map(dbItems.map((item) => [item.keyName, Number(item.priceNet)]));
+  } catch (error) {
+    console.error('Admin pricing database load failed:', error);
+  }
 
   const pricingFromDb: PricingConfig = {
     ...pricingConfig,
