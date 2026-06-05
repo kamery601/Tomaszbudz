@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getLoggedInAdmin } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { pricingConfig } from '@/lib/pricing';
 
 export async function POST(request: NextRequest) {
   const admin = await getLoggedInAdmin();
+
   if (!admin) {
     return NextResponse.json({ success: false, error: 'Brak dostępu. Zaloguj się.' }, { status: 401 });
   }
@@ -17,24 +19,70 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const entries = [
-      ...Object.entries(cables as Record<string, number>),
-      ...Object.entries(items as Record<string, number>)
-    ];
+    const cableEntries = Object.entries(cables as Record<string, number>);
+    const itemEntries = Object.entries(items as Record<string, number>);
 
-    for (const [keyName, priceNet] of entries) {
-      if (typeof priceNet !== 'number' || Number.isNaN(priceNet) || priceNet <= 0) {
-        return NextResponse.json({ success: false, error: `Nieprawidłowa cena dla pozycji: ${keyName}` }, { status: 400 });
+    for (const [keyName, priceNet] of cableEntries) {
+      const cable = pricingConfig.cables[keyName];
+
+      if (!cable) {
+        continue;
       }
 
-      await prisma.pricingItem.update({
+      if (typeof priceNet !== 'number' || Number.isNaN(priceNet) || priceNet <= 0) {
+        return NextResponse.json({ success: false, error: `Nieprawidłowa cena kabla: ${keyName}` }, { status: 400 });
+      }
+
+      await prisma.pricingItem.upsert({
         where: { keyName },
-        data: { priceNet }
+        update: {
+          displayName: cable.name,
+          unit: 'm',
+          priceNet,
+          priceType: 'material'
+        },
+        create: {
+          keyName,
+          displayName: cable.name,
+          unit: 'm',
+          priceNet,
+          priceType: 'material'
+        }
+      });
+    }
+
+    for (const [keyName, priceNet] of itemEntries) {
+      const item = pricingConfig.items[keyName];
+
+      if (!item) {
+        continue;
+      }
+
+      if (typeof priceNet !== 'number' || Number.isNaN(priceNet) || priceNet <= 0) {
+        return NextResponse.json({ success: false, error: `Nieprawidłowa cena pozycji: ${keyName}` }, { status: 400 });
+      }
+
+      await prisma.pricingItem.upsert({
+        where: { keyName },
+        update: {
+          displayName: item.name,
+          unit: item.unit,
+          priceNet,
+          priceType: item.type
+        },
+        create: {
+          keyName,
+          displayName: item.name,
+          unit: item.unit,
+          priceNet,
+          priceType: item.type
+        }
       });
     }
 
     return NextResponse.json({ success: true });
   } catch (error) {
+    console.error('Admin pricing save failed:', error);
     return NextResponse.json({ success: false, error: 'Wystąpił błąd podczas zapisu cen.' }, { status: 500 });
   }
 }
