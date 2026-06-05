@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getLoggedInAdmin } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { pricingConfig } from '@/lib/pricing';
+import { seedPricingItemsIfEmpty } from '@/lib/pricing-store';
 
 export async function POST(request: NextRequest) {
   const admin = await getLoggedInAdmin();
@@ -19,6 +20,8 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    await seedPricingItemsIfEmpty();
+
     const cableEntries = Object.entries(cables as Record<string, number>);
     const itemEntries = Object.entries(items as Record<string, number>);
 
