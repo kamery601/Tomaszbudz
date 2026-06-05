@@ -96,7 +96,7 @@ export default function EstimateCalculator() {
             <div className="space-y-6 rounded-3xl border border-slate-200 p-6">
               <div>
                 <h2 className="text-xl font-semibold text-slate-900">1. Wybierz zakres zadania</h2>
-                <p className="mt-1 text-sm text-slate-500">Zaznacz, jaką ofertę wstępną przygotowujesz według stawek TAURON.</p>
+                <p className="mt-1 text-sm text-slate-500">Zaznacz, jaką orientacyjną wycenę chcesz przygotować dla prac realizowanych zgodnie z wymaganiami TAURON.</p>
               </div>
               <select
                 value={formData.jobType}
