@@ -55,7 +55,7 @@ export default function EstimateCalculator() {
         }
 
         if (Number(formData.conduitsCount) < 0 || Number(formData.conduitsCount) > 20) {
-          throw new Error('Liczba przepustów musi mieścić się w zakresie 0–20.');
+          throw new Error('Łączna długość przepustów (m) musi mieścić się w zakresie 0–20.');
         }
       }
 
@@ -183,7 +183,7 @@ export default function EstimateCalculator() {
                   />
                 </label>
                 <label className="block">
-                  <span className="text-sm font-medium text-slate-700">Liczba przepustów</span>
+                  <span className="text-sm font-medium text-slate-700">Łączna długość przepustów (m)</span>
                   <input
                     type="number"
                     min="0"

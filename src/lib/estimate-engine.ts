@@ -60,7 +60,7 @@ export function calculateMultiEstimate(input: MultiEstimateInput): EstimateResul
   const width = 0.8;
   const volume = Number((length * width * depth).toFixed(2));
   const cableLengthWithSlack = Number((length * 1.04).toFixed(2));
-  const conduitLength = Number((conduitsCount * 5).toFixed(2));
+  const conduitLength = Number(conduitsCount.toFixed(2));
 
   const earthWorkJob: JobType[] = ['cable_connection', 'overhead_to_cable', 'move_meter', 'power_increase'];
 
