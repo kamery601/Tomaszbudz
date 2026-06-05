@@ -9,28 +9,28 @@ interface AdminPricingEditorProps {
 }
 
 export default function AdminPricingEditor({ initialPricing, adminName }: AdminPricingEditorProps) {
-  const [cablePrices, setCablePrices] = useState<Record<string, number>>(
-    Object.fromEntries(Object.entries(initialPricing.cables).map(([key, value]) => [key, value.price_net]))
+  const [cablePrices, setCablePrices] = useState<Record<string, string>>(
+    Object.fromEntries(Object.entries(initialPricing.cables).map(([key, value]) => [key, String(value.price_net ?? '')]))
   );
-  const [itemPrices, setItemPrices] = useState<Record<string, number>>(
-    Object.fromEntries(Object.entries(initialPricing.items).map(([key, value]) => [key, value.price]))
+  const [itemPrices, setItemPrices] = useState<Record<string, string>>(
+    Object.fromEntries(Object.entries(initialPricing.items).map(([key, value]) => [key, String(value.price ?? '')]))
   );
   const [notification, setNotification] = useState('');
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
 
   const totalEditable = useMemo(() => {
-    const cableSum = Object.values(cablePrices).reduce((sum, value) => sum + value, 0);
-    const itemSum = Object.values(itemPrices).reduce((sum, value) => sum + value, 0);
+    const cableSum = Object.values(cablePrices).reduce((sum, value) => sum + (Number(value) || 0), 0);
+    const itemSum = Object.values(itemPrices).reduce((sum, value) => sum + (Number(value) || 0), 0);
     return cableSum + itemSum;
   }, [cablePrices, itemPrices]);
 
   const handleCableChange = (key: string, value: string) => {
-    setCablePrices((current) => ({ ...current, [key]: Number(value) || 0 }));
+    setCablePrices((current) => ({ ...current, [key]: value }));
   };
 
   const handleItemChange = (key: string, value: string) => {
-    setItemPrices((current) => ({ ...current, [key]: Number(value) || 0 }));
+    setItemPrices((current) => ({ ...current, [key]: value }));
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -40,12 +40,27 @@ export default function AdminPricingEditor({ initialPricing, adminName }: AdminP
     setSaving(true);
 
     try {
+      const normalizedCablePrices = Object.fromEntries(
+        Object.entries(cablePrices).map(([key, value]) => [key, Number(String(value).replace(',', '.'))])
+      );
+      const normalizedItemPrices = Object.fromEntries(
+        Object.entries(itemPrices).map(([key, value]) => [key, Number(String(value).replace(',', '.'))])
+      );
+
+      const invalidCable = Object.entries(normalizedCablePrices).find(([, value]) => !Number.isFinite(value) || value <= 0);
+      const invalidItem = Object.entries(normalizedItemPrices).find(([, value]) => !Number.isFinite(value) || value <= 0);
+
+      if (invalidCable || invalidItem) {
+        setError('Uzupełnij wszystkie ceny poprawnymi wartościami większymi od 0.');
+        return;
+      }
+
       const response = await fetch('/api/admin/update-pricing', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ cables: cablePrices, items: itemPrices })
+        body: JSON.stringify({ cables: normalizedCablePrices, items: normalizedItemPrices })
       });
 
       const data = await response.json();
