@@ -39,6 +39,9 @@ export const pricingConfig: PricingConfig = {
   cables: {
     YAKY_4x35: { name: 'YAKY 4x35 mm² (Aluminium - standard przyłącza domowego)', price_net: 14.5 },
     YAKY_4x50: { name: 'YAKY 4x50 mm² (Aluminium - zwiększony przydział mocy)', price_net: 19.8 },
+    YAKXS_4x70: { name: 'YAKXS 4x70 mm² (Aluminium - większe moce / pensjonat / usługi)', price_net: 38.0 },
+    YAKXS_4x120: { name: 'YAKXS 4x120 mm² (Aluminium - większy obiekt usługowy)', price_net: 70.0 },
+    YAKXS_4x240: { name: 'YAKXS 4x240 mm² (Aluminium - duża moc / wyciąg / większy obiekt)', price_net: 135.0 },
     YKY_5x10: { name: 'YKY 5x10 mm² (Miedź - standardowy WLZ do domu)', price_net: 34.0 },
     YKY_5x16: { name: 'YKY 5x16 mm² (Miedź - gruby WLZ pod pompy ciepła)', price_net: 52.0 }
   },

@@ -219,6 +219,9 @@ export default function EstimateCalculator() {
                   >
                     <option value="YAKY_4x35">YAKY 4x35 mm² (Aluminium - standardowy przydział sieci)</option>
                     <option value="YAKY_4x50">YAKY 4x50 mm² (Aluminium - większa moc)</option>
+                    <option value="YAKXS_4x70">YAKXS 4x70 mm² (Aluminium - większe moce / pensjonat / usługi)</option>
+                    <option value="YAKXS_4x120">YAKXS 4x120 mm² (Aluminium - większy obiekt usługowy)</option>
+                    <option value="YAKXS_4x240">YAKXS 4x240 mm² (Aluminium - duża moc / wyciąg / większy obiekt)</option>
                     <option value="YKY_5x10">YKY 5x10 mm² (Miedź - WLZ do domu)</option>
                     <option value="YKY_5x16">YKY 5x16 mm² (Miedź - WLZ pod pompę ciepła)</option>
                   </select>
