@@ -11,6 +11,7 @@ export interface MultiEstimateInput {
   terrainType: TerrainType;
   depth: number;
   conduitsCount: number;
+  meterBoxOwned?: 'yes' | 'no';
 }
 
 export interface CostItem {
@@ -48,7 +49,7 @@ function createCostItem(item: { name: string; unit: string; price: number }, qty
 
 export function calculateMultiEstimate(input: MultiEstimateInput): EstimateResult {
   const items: CostItem[] = [];
-  const { jobType, length, cableType, terrainType, depth, conduitsCount } = input;
+  const { jobType, length, cableType, terrainType, depth, conduitsCount, meterBoxOwned = 'no' } = input;
   const selectedTerrain = pricingConfig.terrains[terrainType] ?? pricingConfig.terrains.earth;
   const selectedCable = pricingConfig.cables[cableType];
 
@@ -79,14 +80,20 @@ export function calculateMultiEstimate(input: MultiEstimateInput): EstimateResul
 
   switch (jobType) {
     case 'cable_connection':
-      items.push(createCostItem(pricingConfig.items.zkp_freestanding, 1));
+      if (meterBoxOwned !== 'yes') {
+        items.push(createCostItem(pricingConfig.items.zkp_freestanding, 1));
+      }
       break;
     case 'move_meter':
-      items.push(createCostItem(pricingConfig.items.box_surface, 1));
+      if (meterBoxOwned !== 'yes') {
+        items.push(createCostItem(pricingConfig.items.box_surface, 1));
+      }
       items.push(createCostItem(pricingConfig.items.cut_and_reconnect, 1));
       break;
     case 'overhead_to_cable':
-      items.push(createCostItem(pricingConfig.items.zkp_freestanding, 1));
+      if (meterBoxOwned !== 'yes') {
+        items.push(createCostItem(pricingConfig.items.zkp_freestanding, 1));
+      }
       items.push(createCostItem(pricingConfig.items.pion_slup, 1));
       break;
     case 'power_increase':

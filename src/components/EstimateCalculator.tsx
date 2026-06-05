@@ -51,7 +51,8 @@ export default function EstimateCalculator() {
         cableType: formData.cableType,
         terrainType: formData.terrainType,
         depth: Number(formData.depth),
-        conduitsCount: Number(formData.conduitsCount)
+        conduitsCount: Number(formData.conduitsCount),
+        meterBoxOwned: formData.meterBoxOwned
       });
 
       setResult(calculation);
