@@ -12,6 +12,7 @@ export interface MultiEstimateInput {
   depth: number;
   conduitsCount: number;
   meterBoxOwned?: 'yes' | 'no';
+  vatRate?: 0.08 | 0.23;
 }
 
 export interface CostItem {
@@ -49,7 +50,7 @@ function createCostItem(item: { name: string; unit: string; price: number }, qty
 
 export function calculateMultiEstimate(input: MultiEstimateInput): EstimateResult {
   const items: CostItem[] = [];
-  const { jobType, length, cableType, terrainType, depth, conduitsCount, meterBoxOwned = 'no' } = input;
+  const { jobType, length, cableType, terrainType, depth, conduitsCount, meterBoxOwned = 'no', vatRate = pricingConfig.vat_rate } = input;
   const selectedTerrain = pricingConfig.terrains[terrainType] ?? pricingConfig.terrains.earth;
   const selectedCable = pricingConfig.cables[cableType];
 
@@ -121,7 +122,7 @@ export function calculateMultiEstimate(input: MultiEstimateInput): EstimateResul
   const subTotalNet = Number(items.reduce((acc, item) => acc + item.totalNet, 0).toFixed(2));
   const markupValue = Number((subTotalNet * pricingConfig.company_markup_pct).toFixed(2));
   const totalNet = Number((subTotalNet + markupValue).toFixed(2));
-  const vatValue = Number((totalNet * pricingConfig.vat_rate).toFixed(2));
+  const vatValue = Number((totalNet * vatRate).toFixed(2));
   const totalBrutto = Number((totalNet + vatValue).toFixed(2));
 
   return {

@@ -13,7 +13,8 @@ const initialData = {
   meterBoxOwned: 'yes' as 'yes' | 'no',
   name: '',
   phone: '',
-  email: ''
+  email: '',
+  vatRate: 0.23 as 0.08 | 0.23
 };
 
 type FormData = typeof initialData;
@@ -66,7 +67,8 @@ export default function EstimateCalculator() {
         terrainType: formData.terrainType,
         depth: Number(formData.depth),
         conduitsCount: Number(formData.conduitsCount),
-        meterBoxOwned: formData.meterBoxOwned
+        meterBoxOwned: formData.meterBoxOwned,
+        vatRate: formData.vatRate
       });
 
       setResult(calculation);
@@ -152,6 +154,20 @@ export default function EstimateCalculator() {
                   onChange={(event) => setFormData({ ...formData, phone: event.target.value })}
                   className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-slate-900"
                 />
+              </label>
+              <label className="block">
+                <span className="text-sm font-medium text-slate-700">Stawka VAT</span>
+                <select
+                  value={formData.vatRate}
+                  onChange={(event) => setFormData({ ...formData, vatRate: Number(event.target.value) as 0.08 | 0.23 })}
+                  className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-slate-900"
+                >
+                  <option value={0.23}>23% — standardowo / firmy / pozostałe przypadki</option>
+                  <option value={0.08}>8% — budownictwo mieszkaniowe, jeśli kwalifikuje się podatkowo</option>
+                </select>
+                <p className="mt-2 text-xs leading-5 text-slate-500">
+                  Stawka 8% może mieć zastosowanie wyłącznie dla kwalifikujących się robót w budownictwie mieszkaniowym; ostateczną stawkę potwierdza wykonawca przed fakturą.
+                </p>
               </label>
               <label className="block">
                 <span className="text-sm font-medium text-slate-700">E-mail</span>
@@ -270,7 +286,7 @@ export default function EstimateCalculator() {
                 <p className="mt-2 text-sm font-medium text-slate-700">Skrzynka licznikowa: {formData.meterBoxOwned === 'yes' ? 'własna' : 'do realizacji'}</p>
               </div>
               <div className="rounded-3xl bg-white px-4 py-3 text-sm text-slate-500 shadow-sm">
-                VAT 23%
+                VAT {(formData.vatRate * 100).toFixed(0)}%
               </div>
             </div>
 
